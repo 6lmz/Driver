@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>添加学生列表</title>
+		<link rel="stylesheet" type="text/css" href="assets\vendor\layui\css\layui.css" />
+	</head>
+	<body>
+
+		<div style="margin: 10px;">
+			<form class="layui-form">
+				
+				<div class="layui-form-item">
+					<label class="layui-form-label">工号</label>
+					<div class="layui-input-inline">
+						<input type="text" name="id" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">姓名</label>
+					<div class="layui-input-inline">
+						<input type="text" name="name" lay-verify="required" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">联系方式</label>
+					<div class="layui-input-inline">
+						<input type="text" name="tel" lay-verify="name" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">性别</label>
+					<div class="layui-input-block">
+					  <input type="radio" name="sex" value="男" title="男">
+					  <input type="radio" name="sex" value="女" title="女" checked>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">车型</label>
+					<div class="layui-input-inline">
+						<input type="text" name="carType" lay-verify="required" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">车牌号</label>
+					<div class="layui-input-inline">
+						<input type="text" name="carnum" lay-verify="required" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">当前状态</label>
+					<div class="layui-input-inline">
+						<input type="text" name="nowstate" lay-verify="required" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">加入时间</label>
+					<div class="layui-input-inline">
+						<input type="text" name="joinTime" id="date" lay-verify="date" class="layui-input">
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit="" lay-filter="demo1">添加</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<script src="assets/vendor/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+		<script>
+			layui.use(['form', 'layedit', 'laydate'], function() {
+				$ = layui.jquery;
+				var form = layui.form,
+					layer = layui.layer,
+					laydate = layui.laydate;
+
+				//日期
+				laydate.render({
+					elem: '#date'
+				});
+
+				//自定义验证规则
+				form.verify({
+					name: function(value) {
+						if (value.length < 2) {
+							return '标题至少得2个字符啊';
+						}
+					},
+					id: [
+						/^[\S]{6,12}$/, '密码必须6到12位，且不能出现空格'
+					]
+				});
+
+				//监听提交
+				form.on('submit(demo1)', function(data) {
+					//使用jquery 必须先通过layui获取jquery
+					// 提交数据, 使用ajax异步提交数据
+					$.ajax({
+						url:'addEmp',
+						// JSON.stringify(data.field)将数据的字段内容转换为json
+						data:'data='+JSON.stringify(data.field),
+						type:'post',//HTTP请求类型
+						// 成功回调
+						success:function(data){
+							layer.alert("增加成功", {icon: 6},function () {
+								// 获得frame索引
+								var index = parent.layer.getFrameIndex(window.name);
+								//关闭当前frame
+								parent.layer.close(index);
+							});
+						},
+						
+					});
+					return false;
+				});
+
+			});
+		</script>
+
+	</body>
+</html>

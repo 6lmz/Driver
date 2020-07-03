@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Home</title>
+  <!-- Meta tags -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="keywords" content=""
+	 />
+  <script>
+	 addEventListener("load", function () { setTimeout(hideURLbar, 0); }, false); function hideURLbar() { window.scrollTo(0, 1); }
+  </script>
+  <!-- Meta tags -->
+  <!--stylesheets-->
+  <link href="assets/css/style.css" rel='stylesheet' type='text/css' media="all">
+  <!--//style sheet end here-->
+  <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600,700" rel="stylesheet">
+</head>
+<body>
+
+  <div class="mid-class">
+	 <div class="art-right-w3ls">
+		<h2>注册</h2>
+			  <!--login form-->
+			  <div class="letter-w3ls">
+          <form class="layui-form" action="register" method="get">
+            <!--输入用户名-->
+            <div class="layui-input-inline form-left-to-w3l">
+                <div class="layui-inline" style="width: 85%">
+                    <input type="text" name="name" id="uname" required  lay-verify="required" placeholder="用户名" autocomplete="off" class="layui-input">
+                </div>
+                <!-- 判断用户名是否可用的图标
+                <div class="layui-inline">
+                    <i class="layui-icon" hidden id="ri" style="color: green; font-weight: bold"></i>
+                    <i class="layui-icon" hidden id="le" style="color: red; font-weight: bold">ဆ</i>
+                </div> -->
+            </div>
+            <!--输入密码-->
+            <div class="layui-input-inline form-left-to-w3l">
+                <div class="layui-inline" style="width: 85%">
+                    <input type="password" name="password" id="pwd" required  lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input">
+                </div>
+     
+            </div>
+            <div class=" btnn" style="width: 85%">
+                <button lay-submit="" type="submit" lay-filter="sub" >注册</button>
+            </div>
+            <br/>
+            <p class="w3layouts_more-buttn">
+                <a href="login.html" >已有账号？立即登录</a>
+            </p>
+        </form>
+				 <div class="clear"></div>
+			  </div>
+	 </div>
+  </div>
+  <footer class="bottem-wthree-footer">
+	 <p>Copyright &copy; 2019.HOKA All rights reserved.</p>
+  </footer>
+
+  <script src="assets/vendor/layui/layui.js"></script>
+  <script type="text/javascript">
+      layui.use(['form', 'layer','jquery'], function () {
+          var form  = layui.form;
+          $  = layui.jquery;
+          //为表单添加blur事件
+         /* $('#uname').blur(function () {
+              var  uname = $('#uname').val();
+              //ajax异步刷新
+              $.ajax({
+                  url:'register',//这里先空着！！！！！！！！！！！！！
+                  type:'post',
+                  dataType:'text',
+                  data:{uname:uname}
+                  //
+                  // //验证用户名是否可用
+                  // success:function (data) {
+                  //     if(data=='1'){
+                  //         //layer.msg('可以注册')
+                  //         $('#ri').removeAttr('hidden');
+                  //         $('#le').attr('hidden','hidden');
+   
+                  //     }else{
+                  //         //layer.msg('用户名已被占用')
+                  //         $('#ri').attr('hidden','hidden');
+                  //         $('#le').removeAttr('hidden');
+                  //     }
+                  // }
+              })
+          });*/
+          //添加表单监听事件
+          form.on('submit(sub)',function (data) {
+              $.ajax({
+                  url:'register',//这里先空着！！！！！！！！！！！！！
+                  type:'post',
+                  data:data.field,
+                  //判断注册状态
+                  success:function (data) {
+                	  layer.msg("注册成功");
+                	  window.location = "login.html"; //注册成功就跳转到login.html
+                  }
+              })
+              //防止页面跳转
+              return false;
+          });
+   
+      });
